@@ -61,8 +61,6 @@ api.MapGet("weatherforecast", () =>
 
 app.MapDefaultEndpoints();
 
-app.UseFileServer();
-
 app.Run();
 
 public record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

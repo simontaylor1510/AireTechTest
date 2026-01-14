@@ -1,5 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using AireTechTest.Server.Api.Appointments;
 using AireTechTest.Server.Api.Patients;
@@ -11,6 +13,12 @@ namespace AireTechTest.Server.IntegrationTests;
 
 public class AppointmentEndpointTests
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     private CustomWebApplicationFactory _factory = null!;
     private HttpClient _client = null!;
 
@@ -46,7 +54,7 @@ public class AppointmentEndpointTests
         HttpResponseMessage response = await _client.GetAsync("/api/appointments");
 
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        List<AppointmentResponse>? appointments = await response.Content.ReadFromJsonAsync<List<AppointmentResponse>>();
+        List<AppointmentResponse>? appointments = await response.Content.ReadFromJsonAsync<List<AppointmentResponse>>(JsonOptions);
         await Assert.That(appointments).IsNotNull();
         await Assert.That(appointments!.Count).IsEqualTo(0);
     }
@@ -72,7 +80,7 @@ public class AppointmentEndpointTests
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.Created);
         await Assert.That(response.Headers.Location).IsNotNull();
 
-        AppointmentResponse? appointment = await response.Content.ReadFromJsonAsync<AppointmentResponse>();
+        AppointmentResponse? appointment = await response.Content.ReadFromJsonAsync<AppointmentResponse>(JsonOptions);
         await Assert.That(appointment).IsNotNull();
         await Assert.That(appointment!.PatientNhsNumber).IsEqualTo("9434765919");
         await Assert.That(appointment.Clinician).IsEqualTo("Dr. Smith");
@@ -140,12 +148,12 @@ public class AppointmentEndpointTests
             Location = "SW1A 1AA"
         };
         HttpResponseMessage createResponse = await _client.PostAsJsonAsync("/api/appointments", createRequest);
-        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>();
+        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>(JsonOptions);
 
         HttpResponseMessage response = await _client.GetAsync($"/api/appointments/{created!.Id}");
 
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        AppointmentResponse? appointment = await response.Content.ReadFromJsonAsync<AppointmentResponse>();
+        AppointmentResponse? appointment = await response.Content.ReadFromJsonAsync<AppointmentResponse>(JsonOptions);
         await Assert.That(appointment).IsNotNull();
         await Assert.That(appointment!.Id).IsEqualTo(created.Id);
     }
@@ -174,7 +182,7 @@ public class AppointmentEndpointTests
             Location = "SW1A 1AA"
         };
         HttpResponseMessage createResponse = await _client.PostAsJsonAsync("/api/appointments", createRequest);
-        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>();
+        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>(JsonOptions);
 
         UpdateAppointmentRequest updateRequest = new()
         {
@@ -189,7 +197,7 @@ public class AppointmentEndpointTests
         HttpResponseMessage response = await _client.PutAsJsonAsync($"/api/appointments/{created!.Id}", updateRequest);
 
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        AppointmentResponse? appointment = await response.Content.ReadFromJsonAsync<AppointmentResponse>();
+        AppointmentResponse? appointment = await response.Content.ReadFromJsonAsync<AppointmentResponse>(JsonOptions);
         await Assert.That(appointment).IsNotNull();
         await Assert.That(appointment!.Status).IsEqualTo(AppointmentStatus.Attended);
         await Assert.That(appointment.Clinician).IsEqualTo("Dr. Jones");
@@ -231,7 +239,7 @@ public class AppointmentEndpointTests
             Location = "SW1A 1AA"
         };
         HttpResponseMessage createResponse = await _client.PostAsJsonAsync("/api/appointments", createRequest);
-        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>();
+        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>(JsonOptions);
 
         UpdateAppointmentRequest updateRequest = new()
         {
@@ -264,7 +272,7 @@ public class AppointmentEndpointTests
             Location = "SW1A 1AA"
         };
         HttpResponseMessage createResponse = await _client.PostAsJsonAsync("/api/appointments", createRequest);
-        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>();
+        AppointmentResponse? created = await createResponse.Content.ReadFromJsonAsync<AppointmentResponse>(JsonOptions);
 
         HttpResponseMessage response = await _client.DeleteAsync($"/api/appointments/{created!.Id}");
 
@@ -313,7 +321,7 @@ public class AppointmentEndpointTests
         HttpResponseMessage response = await _client.GetAsync("/api/appointments");
 
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        List<AppointmentResponse>? appointments = await response.Content.ReadFromJsonAsync<List<AppointmentResponse>>();
+        List<AppointmentResponse>? appointments = await response.Content.ReadFromJsonAsync<List<AppointmentResponse>>(JsonOptions);
         await Assert.That(appointments).IsNotNull();
         await Assert.That(appointments!.Count).IsEqualTo(2);
     }

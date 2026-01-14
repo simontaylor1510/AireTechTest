@@ -1,5 +1,7 @@
 ﻿# Patient Appointment Network Data Application
 
+![Build and Test](https://github.com/simontaylor1510/AireTechTest/actions/workflows/build.yml/badge.svg)
+
 See https://github.com/airelogic/tech-test-portal/blob/main/Patient-Appointment-Backend/README.md for details of requirements
 
 ## Running locally

@@ -17,7 +17,7 @@ builder.AddProject<Projects.AireTechTest_Server>("server")
         if (context.GetEndpoint("https") is { } endpoint)
         {
             context.Urls.Clear();
-            context.Urls.Add(new() { Url = $"{endpoint.Url}/scalar/v1", DisplayText = "Scalar" });
+            context.Urls.Add(new() { Url = $"{endpoint.Url}/scalar/v1", DisplayText = "Test API" });
         }
     });
 

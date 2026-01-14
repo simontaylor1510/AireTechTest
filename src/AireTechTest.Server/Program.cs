@@ -4,6 +4,8 @@ using AireTechTest.Server.Data;
 
 using FluentValidation;
 
+using System.Text.Json.Serialization;
+
 using Microsoft.EntityFrameworkCore;
 
 using Scalar.AspNetCore;
@@ -26,6 +28,12 @@ if (!builder.Configuration.GetValue<bool>("UseInMemoryDatabase"))
 
 // Add services to the container.
 builder.Services.AddProblemDetails();
+
+// Configure JSON serialization to use string enum values
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 // Add FluentValidation validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreatePatientRequestValidator>();

@@ -22,7 +22,7 @@ When the application is running click the Dashboard link to view the dashboard i
 
 ![img.png](img.png)
 
-The database will start up in a Docker container and once it is ready the API will be available by clicking on the `Scalar` link in the Dashboard.
+The database will start up in a Docker container and once it is ready the API will be available by clicking on the `Test API` link in the Dashboard.
 
 You can then interact with the API using the Scalar UI.
 

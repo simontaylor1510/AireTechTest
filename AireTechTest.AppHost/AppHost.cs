@@ -7,7 +7,7 @@ var postgres = builder.AddPostgres("postgres")
 
 var postgresdb = postgres.AddDatabase("postgresdb");
 
-var server = builder.AddProject<Projects.AireTechTest_Server>("server")
+builder.AddProject<Projects.AireTechTest_Server>("server")
     .WithReference(postgresdb)
     .WaitFor(postgresdb)
     .WithHttpHealthCheck("/health")

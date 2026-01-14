@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -8,6 +10,7 @@ namespace AireTechTest.Server.Data;
 /// The connection string here is only used by EF Core tools (dotnet ef migrations add, etc.)
 /// and is not used at runtime where Aspire provides the connection string.
 /// </summary>
+[SuppressMessage("ReSharper", "UnusedType.Global")]
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 {
     public ApplicationDbContext CreateDbContext(string[] args)

@@ -1,9 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 using AireTechTest.Server.Domain;
 using TUnit.Assertions.AssertConditions.Throws;
 using Vogen;
 
 namespace AireTechTest.Server.Tests;
 
+[SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Global")]
 public class PostcodeTests
 {
     // Valid format tests - all 6 standard formats

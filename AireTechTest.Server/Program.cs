@@ -1,4 +1,6 @@
+using AireTechTest.Server.Api.Patients;
 using AireTechTest.Server.Data;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,9 @@ if (!builder.Configuration.GetValue<bool>("UseInMemoryDatabase"))
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
+// Add FluentValidation validators
+builder.Services.AddValidatorsFromAssemblyContaining<CreatePatientRequestValidator>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -40,6 +45,11 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+// Map API endpoints
+app.MapGroup("/api/patients")
+    .MapPatientEndpoints()
+    .WithTags("Patients");
 
 app.MapDefaultEndpoints();
 

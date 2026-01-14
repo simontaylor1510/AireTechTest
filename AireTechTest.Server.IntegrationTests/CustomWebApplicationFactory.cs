@@ -41,10 +41,12 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (disposing)
+        if (!disposing)
         {
-            _connection?.Close();
-            _connection?.Dispose();
+            return;
         }
+
+        _connection?.Close();
+        _connection?.Dispose();
     }
 }

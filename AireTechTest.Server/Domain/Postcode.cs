@@ -9,21 +9,6 @@ namespace AireTechTest.Server.Domain;
 [ValueObject<string>]
 public readonly partial struct Postcode
 {
-    // Valid first position letters (A-Z except QVX)
-    private const string FirstPositionLetters = "ABCDEFGHIJKLMNOPRSTUWYZ";
-
-    // Valid second position letters (A-Z except IJZ)
-    private const string SecondPositionLetters = "ABCDEFGHKLMNOPQRSTUVWXY";
-
-    // Valid third position letters (when letter appears in position 3)
-    private const string ThirdPositionLetters = "ABCDEFGHJKSTUW";
-
-    // Valid fourth position letters (when letter appears in position 4)
-    private const string FourthPositionLetters = "ABEHMNPRVWXY";
-
-    // Valid inward code letters (A-Z except CIKMOV)
-    private const string InwardCodeLetters = "ABDEFGHJLNPQRSTUWXYZ";
-
     // Regex pattern following BS7666 standard
     // Matches: A9 9AA, A99 9AA, A9A 9AA, AA9 9AA, AA99 9AA, AA9A 9AA, GIR 0AA
     private static readonly Regex PostcodeRegex = new(

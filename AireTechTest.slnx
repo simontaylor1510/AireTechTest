@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="src/AireTechTest.AppHost/AireTechTest.AppHost.csproj" />
+  <Project Path="src/AireTechTest.Server/AireTechTest.Server.csproj" />
+  <Project Path="tests/AireTechTest.Server.IntegrationTests/AireTechTest.Server.IntegrationTests.csproj" />
+  <Project Path="tests/AireTechTest.Server.Tests/AireTechTest.Server.Tests.csproj" />
+</Solution>

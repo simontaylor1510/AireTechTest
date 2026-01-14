@@ -58,7 +58,7 @@ In the development environment the test data is automatically loaded into the da
 - The client would like to ensure that [patient names can be represented correctly, in line with GDPR](https://shkspr.mobi/blog/2021/10/ebcdic-is-incompatible-with-gdpr/).
   - Data is stored in UTF-8 and returned to the frontend in UTF-8 so this isn't an issue.
 
-### Not Implememted
+### Not Implemented
 
 - Appointments can be cancelled, but cancelled appointments cannot be reinstated.
   - I felt this was ambiguous so chose not address it.

@@ -1,8 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
+
 using AireTechTest.Server.Api.Appointments;
 using AireTechTest.Server.Api.Patients;
 using AireTechTest.Server.Domain;
+
 using Microsoft.AspNetCore.Http;
 
 namespace AireTechTest.Server.IntegrationTests;
@@ -107,7 +109,7 @@ public class AppointmentEndpointTests
             Status = AppointmentStatus.Active,
             Time = DateTimeOffset.Now.AddDays(1),
             DurationMinutes = 0, // Invalid
-            Clinician = "",      // Invalid
+            Clinician = "", // Invalid
             Department = Department.Oncology,
             Location = "INVALID" // Invalid
         };
@@ -116,7 +118,8 @@ public class AppointmentEndpointTests
 
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
 
-        HttpValidationProblemDetails? problem = await response.Content.ReadFromJsonAsync<HttpValidationProblemDetails>();
+        HttpValidationProblemDetails?
+            problem = await response.Content.ReadFromJsonAsync<HttpValidationProblemDetails>();
         await Assert.That(problem).IsNotNull();
         await Assert.That(problem!.Errors.Count).IsGreaterThanOrEqualTo(3);
     }
@@ -206,7 +209,8 @@ public class AppointmentEndpointTests
             Location = "EC1A 1BB"
         };
 
-        HttpResponseMessage response = await _client.PutAsJsonAsync($"/api/appointments/{Guid.NewGuid()}", updateRequest);
+        HttpResponseMessage response =
+            await _client.PutAsJsonAsync($"/api/appointments/{Guid.NewGuid()}", updateRequest);
 
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.NotFound);
     }

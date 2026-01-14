@@ -1,7 +1,9 @@
 using AireTechTest.Server.Data;
 using AireTechTest.Server.Domain;
+
 using FluentValidation;
 using FluentValidation.Results;
+
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -81,11 +83,12 @@ public static class AppointmentEndpoints
         return TypedResults.Ok(AppointmentResponse.FromAppointment(appointment));
     }
 
-    private static async Task<Results<Created<AppointmentResponse>, NotFound<ProblemDetails>, ValidationProblem>> CreateAppointment(
-        CreateAppointmentRequest request,
-        IValidator<CreateAppointmentRequest> validator,
-        ApplicationDbContext dbContext,
-        CancellationToken cancellationToken)
+    private static async Task<Results<Created<AppointmentResponse>, NotFound<ProblemDetails>, ValidationProblem>>
+        CreateAppointment(
+            CreateAppointmentRequest request,
+            IValidator<CreateAppointmentRequest> validator,
+            ApplicationDbContext dbContext,
+            CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
@@ -128,12 +131,13 @@ public static class AppointmentEndpoints
         return TypedResults.Created($"/api/appointments/{appointment.Id.Value}", response);
     }
 
-    private static async Task<Results<Ok<AppointmentResponse>, NotFound<ProblemDetails>, ValidationProblem>> UpdateAppointment(
-        Guid id,
-        UpdateAppointmentRequest request,
-        IValidator<UpdateAppointmentRequest> validator,
-        ApplicationDbContext dbContext,
-        CancellationToken cancellationToken)
+    private static async Task<Results<Ok<AppointmentResponse>, NotFound<ProblemDetails>, ValidationProblem>>
+        UpdateAppointment(
+            Guid id,
+            UpdateAppointmentRequest request,
+            IValidator<UpdateAppointmentRequest> validator,
+            ApplicationDbContext dbContext,
+            CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)

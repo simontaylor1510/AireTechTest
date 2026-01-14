@@ -1,4 +1,5 @@
 using AireTechTest.Server.Api.Patients;
+
 using FluentValidation.Results;
 
 namespace AireTechTest.Server.Tests.Api.Patients;
@@ -28,10 +29,7 @@ public class CreatePatientRequestValidatorTests
     {
         CreatePatientRequest request = new()
         {
-            NhsNumber = "",
-            Name = "John Smith",
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = "SW1A 1AA"
+            NhsNumber = "", Name = "John Smith", DateOfBirth = new DateOnly(1990, 1, 15), Postcode = "SW1A 1AA"
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -62,10 +60,7 @@ public class CreatePatientRequestValidatorTests
     {
         CreatePatientRequest request = new()
         {
-            NhsNumber = "9434765919",
-            Name = "",
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = "SW1A 1AA"
+            NhsNumber = "9434765919", Name = "", DateOfBirth = new DateOnly(1990, 1, 15), Postcode = "SW1A 1AA"
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -130,10 +125,7 @@ public class CreatePatientRequestValidatorTests
     {
         CreatePatientRequest request = new()
         {
-            NhsNumber = "9434765919",
-            Name = "John Smith",
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = ""
+            NhsNumber = "9434765919", Name = "John Smith", DateOfBirth = new DateOnly(1990, 1, 15), Postcode = ""
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -164,10 +156,7 @@ public class CreatePatientRequestValidatorTests
     {
         CreatePatientRequest request = new()
         {
-            NhsNumber = "",
-            Name = "",
-            DateOfBirth = DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
-            Postcode = ""
+            NhsNumber = "", Name = "", DateOfBirth = DateOnly.FromDateTime(DateTime.Today.AddDays(1)), Postcode = ""
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);

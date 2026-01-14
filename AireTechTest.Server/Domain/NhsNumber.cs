@@ -46,7 +46,8 @@ public readonly partial struct NhsNumber
 
         int actualCheckDigit = digits[9] - '0';
         return expectedCheckDigit != actualCheckDigit
-            ? Validation.Invalid($"NHS Number check digit is invalid. Expected {expectedCheckDigit}, got {actualCheckDigit}")
+            ? Validation.Invalid(
+                $"NHS Number check digit is invalid. Expected {expectedCheckDigit}, got {actualCheckDigit}")
             : Validation.Ok;
     }
 

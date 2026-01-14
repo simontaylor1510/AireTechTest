@@ -1,7 +1,9 @@
 using AireTechTest.Server.Data;
 using AireTechTest.Server.Domain;
+
 using FluentValidation;
 using FluentValidation.Results;
+
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -84,11 +86,12 @@ public static class PatientEndpoints
         return TypedResults.Ok(PatientResponse.FromPatient(patient));
     }
 
-    private static async Task<Results<Created<PatientResponse>, Conflict<ProblemDetails>, ValidationProblem>> CreatePatient(
-        CreatePatientRequest request,
-        IValidator<CreatePatientRequest> validator,
-        ApplicationDbContext dbContext,
-        CancellationToken cancellationToken)
+    private static async Task<Results<Created<PatientResponse>, Conflict<ProblemDetails>, ValidationProblem>>
+        CreatePatient(
+            CreatePatientRequest request,
+            IValidator<CreatePatientRequest> validator,
+            ApplicationDbContext dbContext,
+            CancellationToken cancellationToken)
     {
         ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
@@ -170,9 +173,7 @@ public static class PatientEndpoints
         // Update properties using record with expression
         Patient updatedPatient = patient with
         {
-            Name = request.Name,
-            DateOfBirth = request.DateOfBirth,
-            Postcode = Postcode.From(request.Postcode)
+            Name = request.Name, DateOfBirth = request.DateOfBirth, Postcode = Postcode.From(request.Postcode)
         };
 
         dbContext.Entry(patient).CurrentValues.SetValues(updatedPatient);

@@ -1,4 +1,5 @@
 using AireTechTest.Server.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace AireTechTest.Server.Data;
@@ -6,13 +7,8 @@ namespace AireTechTest.Server.Data;
 /// <summary>
 /// Application database context for managing patients and appointments.
 /// </summary>
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
-
     /// <summary>
     /// Gets or sets the patients table.
     /// </summary>

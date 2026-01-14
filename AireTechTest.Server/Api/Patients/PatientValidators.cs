@@ -1,5 +1,7 @@
 using AireTechTest.Server.Domain;
+
 using FluentValidation;
+
 using Vogen;
 
 namespace AireTechTest.Server.Api.Patients;

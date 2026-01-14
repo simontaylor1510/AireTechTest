@@ -1,5 +1,6 @@
 using AireTechTest.Server.Api.Appointments;
 using AireTechTest.Server.Domain;
+
 using FluentValidation.Results;
 
 namespace AireTechTest.Server.Tests.Api.Appointments;

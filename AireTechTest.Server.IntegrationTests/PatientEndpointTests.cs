@@ -1,6 +1,8 @@
 using System.Net;
 using System.Net.Http.Json;
+
 using AireTechTest.Server.Api.Patients;
+
 using Microsoft.AspNetCore.Http;
 
 namespace AireTechTest.Server.IntegrationTests;
@@ -74,7 +76,8 @@ public class PatientEndpointTests
 
         await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
 
-        HttpValidationProblemDetails? problem = await response.Content.ReadFromJsonAsync<HttpValidationProblemDetails>();
+        HttpValidationProblemDetails?
+            problem = await response.Content.ReadFromJsonAsync<HttpValidationProblemDetails>();
         await Assert.That(problem).IsNotNull();
         await Assert.That(problem!.Errors.ContainsKey("NhsNumber")).IsTrue();
     }
@@ -145,9 +148,7 @@ public class PatientEndpointTests
         // Update the patient
         UpdatePatientRequest updateRequest = new()
         {
-            Name = "Jane Smith",
-            DateOfBirth = new DateOnly(1985, 6, 20),
-            Postcode = "EC1A 1BB"
+            Name = "Jane Smith", DateOfBirth = new DateOnly(1985, 6, 20), Postcode = "EC1A 1BB"
         };
 
         HttpResponseMessage response = await _client.PutAsJsonAsync("/api/patients/9434765919", updateRequest);
@@ -165,9 +166,7 @@ public class PatientEndpointTests
     {
         UpdatePatientRequest updateRequest = new()
         {
-            Name = "Jane Smith",
-            DateOfBirth = new DateOnly(1985, 6, 20),
-            Postcode = "EC1A 1BB"
+            Name = "Jane Smith", DateOfBirth = new DateOnly(1985, 6, 20), Postcode = "EC1A 1BB"
         };
 
         HttpResponseMessage response = await _client.PutAsJsonAsync("/api/patients/9434765919", updateRequest);
@@ -191,9 +190,7 @@ public class PatientEndpointTests
         // Try to update with invalid data
         UpdatePatientRequest updateRequest = new()
         {
-            Name = "",
-            DateOfBirth = new DateOnly(1985, 6, 20),
-            Postcode = "INVALID"
+            Name = "", DateOfBirth = new DateOnly(1985, 6, 20), Postcode = "INVALID"
         };
 
         HttpResponseMessage response = await _client.PutAsJsonAsync("/api/patients/9434765919", updateRequest);

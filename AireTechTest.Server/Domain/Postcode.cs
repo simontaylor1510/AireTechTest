@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+
 using Vogen;
 
 namespace AireTechTest.Server.Domain;
@@ -11,19 +12,7 @@ public readonly partial struct Postcode
 {
     // Regex pattern following BS7666 standard
     // Matches: A9 9AA, A99 9AA, A9A 9AA, AA9 9AA, AA99 9AA, AA9A 9AA, GIR 0AA
-    private static readonly Regex PostcodeRegex = new(
-        @"^(GIR\s*0AA|" +
-        @"[A-PR-UWYZ]" +                           // First letter (not QVX)
-        @"(" +
-            @"[0-9][0-9]?" +                       // A9 or A99
-            @"|[A-HK-Y][0-9][0-9]?" +              // AA9 or AA99
-            @"|[0-9][A-HJKSTUW]" +                 // A9A
-            @"|[A-HK-Y][0-9][ABEHMNPRVWXY]" +      // AA9A
-        @")" +
-        @"\s*" +                                    // Optional space
-        @"[0-9][ABD-HJLNP-UW-Z]{2}" +              // Inward code: digit + 2 letters (not CIKMOV)
-        @")$",
-        RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex PostcodeRegex = GeneratedPostcodeRegex();
 
     private static Validation Validate(string input)
     {
@@ -40,18 +29,13 @@ public readonly partial struct Postcode
 
         // Check length (5-8 characters including optional space)
         string withoutSpace = normalized.Replace(" ", "");
-        if (withoutSpace.Length < 5 || withoutSpace.Length > 7)
+        if (withoutSpace.Length is < 5 or > 7)
         {
             return Validation.Invalid("Postcode must be between 5 and 7 characters (excluding space)");
         }
 
         // Validate against regex pattern
-        if (!PostcodeRegex.IsMatch(normalized))
-        {
-            return Validation.Invalid("Postcode format is invalid");
-        }
-
-        return Validation.Ok;
+        return !PostcodeRegex.IsMatch(normalized) ? Validation.Invalid("Postcode format is invalid") : Validation.Ok;
     }
 
     private static string NormalizeInput(string input)
@@ -105,6 +89,7 @@ public readonly partial struct Postcode
             {
                 return outward[..^1];
             }
+
             return outward;
         }
     }
@@ -113,4 +98,9 @@ public readonly partial struct Postcode
     /// Gets the postcode sector (district + first digit of inward code).
     /// </summary>
     public string Sector => $"{OutwardCode} {InwardCode[0]}";
+
+    [GeneratedRegex(
+        @"^(GIR\s*0AA|[A-PR-UWYZ]([0-9][0-9]?|[A-HK-Y][0-9][0-9]?|[0-9][A-HJKSTUW]|[A-HK-Y][0-9][ABEHMNPRVWXY])\s*[0-9][ABD-HJLNP-UW-Z]{2})$",
+        RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-GB")]
+    private static partial Regex GeneratedPostcodeRegex();
 }

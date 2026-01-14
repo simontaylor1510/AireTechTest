@@ -6,11 +6,7 @@ namespace AireTechTest.Server.Domain;
 /// Strongly-typed identifier for an appointment.
 /// </summary>
 [ValueObject<Guid>]
-#pragma warning disable AddNormalizeInputMethod
-#pragma warning disable CA1036
 public readonly partial struct AppointmentId
-#pragma warning restore CA1036
-#pragma warning restore AddNormalizeInputMethod
 {
     private static Validation Validate(Guid input)
     {
@@ -21,4 +17,9 @@ public readonly partial struct AppointmentId
     /// Creates a new unique AppointmentId.
     /// </summary>
     public static AppointmentId New() => From(Guid.NewGuid());
+
+    private static Guid NormalizeInput(Guid input)
+    {
+        return input;
+    }
 }

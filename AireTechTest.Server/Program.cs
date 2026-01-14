@@ -1,7 +1,9 @@
 using AireTechTest.Server.Api.Appointments;
 using AireTechTest.Server.Api.Patients;
 using AireTechTest.Server.Data;
+
 using FluentValidation;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +17,7 @@ if (!builder.Configuration.GetValue<bool>("UseInMemoryDatabase"))
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
         string connectionString = builder.Configuration.GetConnectionString("postgresdb")
-            ?? throw new InvalidOperationException("Connection string 'postgresdb' not found.");
+                                  ?? throw new InvalidOperationException("Connection string 'postgresdb' not found.");
         options.UseNpgsql(connectionString);
     });
 }
@@ -59,6 +61,3 @@ app.MapGroup("/api/appointments")
 app.MapDefaultEndpoints();
 
 app.Run();
-
-// Make Program accessible for integration tests
-public partial class Program { }

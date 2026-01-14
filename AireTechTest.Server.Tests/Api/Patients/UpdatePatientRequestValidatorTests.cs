@@ -1,4 +1,5 @@
 using AireTechTest.Server.Api.Patients;
+
 using FluentValidation.Results;
 
 namespace AireTechTest.Server.Tests.Api.Patients;
@@ -12,9 +13,7 @@ public class UpdatePatientRequestValidatorTests
     {
         UpdatePatientRequest request = new()
         {
-            Name = "John Smith",
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = "SW1A 1AA"
+            Name = "John Smith", DateOfBirth = new DateOnly(1990, 1, 15), Postcode = "SW1A 1AA"
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -27,9 +26,7 @@ public class UpdatePatientRequestValidatorTests
     {
         UpdatePatientRequest request = new()
         {
-            Name = "",
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = "SW1A 1AA"
+            Name = "", DateOfBirth = new DateOnly(1990, 1, 15), Postcode = "SW1A 1AA"
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -43,9 +40,7 @@ public class UpdatePatientRequestValidatorTests
     {
         UpdatePatientRequest request = new()
         {
-            Name = new string('A', 201),
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = "SW1A 1AA"
+            Name = new string('A', 201), DateOfBirth = new DateOnly(1990, 1, 15), Postcode = "SW1A 1AA"
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -75,9 +70,7 @@ public class UpdatePatientRequestValidatorTests
     {
         UpdatePatientRequest request = new()
         {
-            Name = "John Smith",
-            DateOfBirth = new DateOnly(1800, 1, 1),
-            Postcode = "SW1A 1AA"
+            Name = "John Smith", DateOfBirth = new DateOnly(1800, 1, 1), Postcode = "SW1A 1AA"
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -91,9 +84,7 @@ public class UpdatePatientRequestValidatorTests
     {
         UpdatePatientRequest request = new()
         {
-            Name = "John Smith",
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = ""
+            Name = "John Smith", DateOfBirth = new DateOnly(1990, 1, 15), Postcode = ""
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);
@@ -107,9 +98,7 @@ public class UpdatePatientRequestValidatorTests
     {
         UpdatePatientRequest request = new()
         {
-            Name = "John Smith",
-            DateOfBirth = new DateOnly(1990, 1, 15),
-            Postcode = "INVALID"
+            Name = "John Smith", DateOfBirth = new DateOnly(1990, 1, 15), Postcode = "INVALID"
         };
 
         ValidationResult result = await _validator.ValidateAsync(request);

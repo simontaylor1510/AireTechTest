@@ -12,6 +12,10 @@
     <File Path="global.json" />
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/TestData/">
+    <File Path="TestData/example_appointments.json" />
+    <File Path="TestData/example_patients.json" />
+  </Folder>
   <Project Path="src/AireTechTest.AppHost/AireTechTest.AppHost.csproj" />
   <Project Path="src/AireTechTest.Server/AireTechTest.Server.csproj" />
   <Project Path="tests/AireTechTest.Server.IntegrationTests/AireTechTest.Server.IntegrationTests.csproj" />

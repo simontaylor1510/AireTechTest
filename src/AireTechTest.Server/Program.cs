@@ -35,12 +35,13 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Apply pending migrations automatically in development (skip for in-memory test database)
+// Apply pending migrations and seed data in development (skip for in-memory test database)
 if (app.Environment.IsDevelopment() && !app.Configuration.GetValue<bool>("UseInMemoryDatabase"))
 {
     using IServiceScope scope = app.Services.CreateScope();
     ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate();
+    await dbContext.Database.MigrateAsync();
+    await DatabaseSeeder.SeedAsync(dbContext, Path.Combine(app.Environment.ContentRootPath, "..", "..", "TestData"));
 }
 
 // Configure the HTTP request pipeline.

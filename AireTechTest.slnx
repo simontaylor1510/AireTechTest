@@ -4,6 +4,13 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/SolutionFiles/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+  </Folder>
   <Project Path="src/AireTechTest.AppHost/AireTechTest.AppHost.csproj" />
   <Project Path="src/AireTechTest.Server/AireTechTest.Server.csproj" />
   <Project Path="tests/AireTechTest.Server.IntegrationTests/AireTechTest.Server.IntegrationTests.csproj" />

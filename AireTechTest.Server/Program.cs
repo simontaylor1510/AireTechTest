@@ -1,3 +1,4 @@
+using AireTechTest.Server.Api.Appointments;
 using AireTechTest.Server.Api.Patients;
 using AireTechTest.Server.Data;
 using FluentValidation;
@@ -50,6 +51,10 @@ if (app.Environment.IsDevelopment())
 app.MapGroup("/api/patients")
     .MapPatientEndpoints()
     .WithTags("Patients");
+
+app.MapGroup("/api/appointments")
+    .MapAppointmentEndpoints()
+    .WithTags("Appointments");
 
 app.MapDefaultEndpoints();
 

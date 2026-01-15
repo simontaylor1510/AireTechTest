@@ -1,9 +1,11 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text;
 
 using AireTechTest.Server.Api.Patients;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AireTechTest.Server.IntegrationTests;
 
@@ -257,5 +259,52 @@ public class PatientEndpointTests
         await Assert.That(patients).IsNotNull();
         // At least 1 patient (the first one should succeed, second has invalid NHS number)
         await Assert.That(patients!.Count).IsGreaterThanOrEqualTo(1);
+    }
+
+    [Test]
+    public async Task CreatePatient_WithEmptyDateOfBirth_ReturnsBadRequest()
+    {
+        // Send raw JSON with empty date string (cannot use typed request for this)
+        var content = new StringContent(
+            """{"nhsNumber": "9434765919", "name": "John Smith", "dateOfBirth": "", "postcode": "SW1A 1AA"}""",
+            Encoding.UTF8,
+            "application/json");
+
+        HttpResponseMessage response = await _client.PostAsync("/api/patients", content);
+
+        await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
+
+        HttpValidationProblemDetails? problem =
+            await response.Content.ReadFromJsonAsync<HttpValidationProblemDetails>();
+        await Assert.That(problem).IsNotNull();
+        await Assert.That(problem!.Title).IsEqualTo("One or more validation errors occurred.");
+        await Assert.That(problem.Status).IsEqualTo(400);
+        await Assert.That(problem.Errors.ContainsKey("dateOfBirth")).IsTrue();
+    }
+
+    [Test]
+    public async Task CreatePatient_WithInvalidDateFormat_ReturnsBadRequest()
+    {
+        var content = new StringContent(
+            """{"nhsNumber": "9434765919", "name": "John Smith", "dateOfBirth": "not-a-date", "postcode": "SW1A 1AA"}""",
+            Encoding.UTF8,
+            "application/json");
+
+        HttpResponseMessage response = await _client.PostAsync("/api/patients", content);
+
+        await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
+    }
+
+    [Test]
+    public async Task CreatePatient_WithMalformedJson_ReturnsBadRequest()
+    {
+        var content = new StringContent(
+            """{"nhsNumber": "9434765919", "name": }""",
+            Encoding.UTF8,
+            "application/json");
+
+        HttpResponseMessage response = await _client.PostAsync("/api/patients", content);
+
+        await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
     }
 }

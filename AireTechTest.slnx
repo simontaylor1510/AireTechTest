@@ -13,7 +13,7 @@
     <File Path="img.png" />
     <File Path="README.md" />
   </Folder>
-  <Folder Name="/TestData/">
+  <Folder Name="/SolutionFiles/TestData/">
     <File Path="TestData/example_appointments.json" />
     <File Path="TestData/example_patients.json" />
   </Folder>

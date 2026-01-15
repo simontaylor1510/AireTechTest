@@ -14,10 +14,10 @@ builder.AddProject<Projects.AireTechTest_Server>("server")
     .WithExternalHttpEndpoints()
     .WithUrls(context =>
     {
-        if (context.GetEndpoint("https") is { } endpoint)
+        if (context.GetEndpoint("http") is { } httpEndpoint)
         {
             context.Urls.Clear();
-            context.Urls.Add(new() { Url = $"{endpoint.Url}/scalar/v1", DisplayText = "Test API" });
+            context.Urls.Add(new() { Url = $"{httpEndpoint.Url}/scalar/v1", DisplayText = "Test API" });
         }
     });
 

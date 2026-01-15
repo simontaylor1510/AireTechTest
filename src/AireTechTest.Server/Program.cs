@@ -1,3 +1,4 @@
+using AireTechTest.Server.Api;
 using AireTechTest.Server.Api.Appointments;
 using AireTechTest.Server.Api.Patients;
 using AireTechTest.Server.Data;
@@ -28,6 +29,9 @@ if (!builder.Configuration.GetValue<bool>("UseInMemoryDatabase"))
 
 // Add services to the container.
 builder.Services.AddProblemDetails();
+
+// Add custom exception handler for JSON deserialization errors
+builder.Services.AddExceptionHandler<JsonExceptionHandler>();
 
 // Configure JSON serialization to use string enum values
 builder.Services.ConfigureHttpJsonOptions(options =>

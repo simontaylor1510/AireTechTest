@@ -5,7 +5,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://airetechtest.dev.localhost:17116;http://airetechtest.dev.localhost:15252",
+      "applicationUrl": "https://localhost:17116;http://localhost:15252",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DOTNET_ENVIRONMENT": "Development",
@@ -18,7 +18,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://airetechtest.dev.localhost:15252",
+      "applicationUrl": "http://localhost:15252",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DOTNET_ENVIRONMENT": "Development",
